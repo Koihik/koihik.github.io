@@ -12,18 +12,21 @@
 
     
     <meta name="description" content="warbler是JRuby团队开发的一个用来把你的Ruby程序打包成jar包或者war包的gem.我们写完JRubyFX的GUI程序,是需要将其打包成一个可执行文件来提供给用户的,我们可以使用warbler将JRubyFX程序打包成jar包,再用其他工具将jar包打成exe或其他可执行文件.
-warbler支持用gemspec来配置,假如我们的Demo工程是这样的:1234-res  -bg.pn">
+warbler支持用gemspec来配置,假如我们的Demo工程是这样的:
+1234-res  -bg.p">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用warbler打包JRubyFX程序">
 <meta property="og:url" content="http://koihik.github.io/2016/11/25/使用warbler打包JRubyFX程序/index.html">
 <meta property="og:site_name" content="Koihik's Blog">
 <meta property="og:description" content="warbler是JRuby团队开发的一个用来把你的Ruby程序打包成jar包或者war包的gem.我们写完JRubyFX的GUI程序,是需要将其打包成一个可执行文件来提供给用户的,我们可以使用warbler将JRubyFX程序打包成jar包,再用其他工具将jar包打成exe或其他可执行文件.
-warbler支持用gemspec来配置,假如我们的Demo工程是这样的:1234-res  -bg.pn">
-<meta property="og:updated_time" content="2016-11-25T02:02:16.430Z">
+warbler支持用gemspec来配置,假如我们的Demo工程是这样的:
+1234-res  -bg.p">
+<meta property="og:updated_time" content="2016-11-25T02:53:07.980Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用warbler打包JRubyFX程序">
 <meta name="twitter:description" content="warbler是JRuby团队开发的一个用来把你的Ruby程序打包成jar包或者war包的gem.我们写完JRubyFX的GUI程序,是需要将其打包成一个可执行文件来提供给用户的,我们可以使用warbler将JRubyFX程序打包成jar包,再用其他工具将jar包打成exe或其他可执行文件.
-warbler支持用gemspec来配置,假如我们的Demo工程是这样的:1234-res  -bg.pn">
+warbler支持用gemspec来配置,假如我们的Demo工程是这样的:
+1234-res  -bg.p">
 
     
     <link rel="alternative" href="/atom.xml" title="Koihik&#39;s Blog" type="application/atom+xml">
@@ -98,10 +101,12 @@ warbler支持用gemspec来配置,假如我们的Demo工程是这样的:1234-res 
 		</div>
 		
 		<p>warbler是JRuby团队开发的一个用来把你的Ruby程序打包成jar包或者war包的gem.<br>我们写完JRubyFX的GUI程序,是需要将其打包成一个可执行文件来提供给用户的,我们可以使用warbler将JRubyFX程序打包成jar包,再用其他工具将jar包打成exe或其他可执行文件.</p>
-<p>warbler支持用gemspec来配置,假如我们的Demo工程是这样的:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-res</div><div class="line">  -bg.png</div><div class="line">-scripts</div><div class="line">  -entrance.rb</div></pre></td></tr></table></figure></p>
+<p>warbler支持用gemspec来配置,假如我们的Demo工程是这样的:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-res</div><div class="line">  -bg.png</div><div class="line">-scripts</div><div class="line">  -entrance.rb</div></pre></td></tr></table></figure>
 <p>其中res目录存放所有的资源,scripts存放所有的脚本,scripts/entrance.rb是我们的程序入口<br>那么对应的gemspec配置如下</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># just for warbler</span></div><div class="line">Gem::Specification.new <span class="keyword">do</span> <span class="params">|s|</span></div><div class="line">  s.name        = <span class="string">'JRubyFXDemo'</span></div><div class="line">  s.version     = <span class="string">'0.0.1'</span></div><div class="line">  s.date        = <span class="string">'2016-10-24'</span></div><div class="line">  s.summary     = <span class="string">"JRubyFXDemo"</span></div><div class="line">  s.description = <span class="string">"JRubyFXDemo"</span></div><div class="line">  s.authors     = [<span class="string">"Koihik"</span>]</div><div class="line">  s.require_paths = [<span class="string">'scripts'</span>]</div><div class="line">  s.executables = [<span class="string">'../scripts/entrance.rb'</span>]</div><div class="line">  s.add_dependency <span class="string">'jrubyfx'</span></div><div class="line">  s.email       = <span class="string">'koihik@hotmail.com'</span></div><div class="line">  s.files       = Dir[<span class="string">'**/*'</span>]</div><div class="line">  s.homepage    = <span class="string">'none'</span></div><div class="line">  s.license     = <span class="string">'MIT'</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
-<p>其中executables是’../scripts/entrance.rb’,而不是’scripts/entrance.rb’是因为executables默认是在bin/目录下.<br>最后在工程根目录下执行warble,就可以生成jar包了.</p>
+<p>其中executables是’../scripts/entrance.rb’,而不是’scripts/entrance.rb’是因为executables默认是在bin/目录下.</p>
+<p>最后在工程根目录下执行warble,就可以生成jar包了.</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -177,7 +182,7 @@ warbler支持用gemspec来配置,假如我们的Demo工程是这样的:1234-res 
 		  
 		
 		  
-			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>1</sup></a></li>
+			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
 		  
 		
 		</ul>

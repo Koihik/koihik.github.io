@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://koihik.github.io/2016/11/25/LeetCode-287-Find-the-Duplicate-Number/index.html">
 <meta property="og:site_name" content="Koihik's Blog">
 <meta property="og:description" content="Find the Duplicate NumberGiven an array nums containing n + 1 integers where each integer is between 1 and n (inclusive), prove that at least one duplicate number must exist. Assume that there is only">
-<meta property="og:updated_time" content="2016-11-25T02:45:45.480Z">
+<meta property="og:updated_time" content="2016-11-25T02:51:10.401Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode 287. Find the Duplicate Number">
 <meta name="twitter:description" content="Find the Duplicate NumberGiven an array nums containing n + 1 integers where each integer is between 1 and n (inclusive), prove that at least one duplicate number must exist. Assume that there is only">
@@ -96,7 +96,10 @@
 		
 		<h2 id="Find-the-Duplicate-Number"><a href="#Find-the-Duplicate-Number" class="headerlink" title="Find the Duplicate Number"></a>Find the Duplicate Number</h2><p>Given an array nums containing n + 1 integers where each integer is between 1 and n (inclusive), prove that at least one duplicate number must exist. Assume that there is only one duplicate number, find the duplicate one.</p>
 <p>Note:<br>You must not modify the array (assume the array is read only).<br>You must use only constant, O(1) extra space.<br>Your runtime complexity should be less than O(n^2).<br>There is only one duplicate number in the array, but it could be repeated more than once.</p>
-<h2 id="解"><a href="#解" class="headerlink" title="解"></a>解</h2><p>找出重复数字的话,上来可能想到用Map,但是题中限定要常数的额外空间.并且不能改动原数组,所以排序也是不可行的.<br>一开始是想用分治的方法,将数组分为两部分(A,B),如果A中有重复的数,那么答案就在A中,如果在B中同理.如果A,B中都没有的话,那么说明有一个数在A,另一个在B.然而发现这种一个在A一个在B的情况无法处理,只能遍历,那么时间复杂度在最坏的情况下就是O(n^2)了.<br>后来注意到题中有个条件,一共(n+1)个整数,这些整数的范围都在(1-n)之间.那么就可以用二分法,取(1-n)的中位数n/2,遍历一次数组统计大于n/2和小于n/2的数的个数,如果大于n/2的数多于一半,说明重复的数是大于n/2的,反之同理.这样一次就可以排除一半的数,时间复杂度为O(nlogn).<br>代码如下:</p>
+<h2 id="解"><a href="#解" class="headerlink" title="解"></a>解</h2><p>找出重复数字的话,上来可能想到用Map,但是题中限定要常数的额外空间,所以用Map记录是不可行的.<br>并且不能改动原数组,所以排序也是不可行的.</p>
+<p>一开始是想用分治的方法,将数组分为两部分(A,B),如果A中有重复的数,那么答案就在A中,如果在B中同理.<br>如果A,B中都没有的话,那么说明有一个数在A,另一个在B.<br>然而发现这种一个在A一个在B的情况无法处理,只能遍历,那么时间复杂度在最坏的情况下就是O(n^2)了.</p>
+<p>后来注意到题中有个条件,一共(n+1)个整数,这些整数的范围都在(1-n)之间.<br>那么就可以用二分法,取(1-n)的中位数n/2,遍历一次数组统计大于n/2和小于n/2的数的个数,如果大于n/2的数多于一半,说明重复的数是大于n/2的,反之同理.<br>这样一次就可以排除一半的数,时间复杂度为O(nlogn).</p>
+<p>代码如下:</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">__find_duplicate</span><span class="params">(nums,start_num,middle_num,end_num)</span></span></div><div class="line">    less = <span class="number">0</span></div><div class="line">    eqls = <span class="number">0</span></div><div class="line">    greater = <span class="number">0</span></div><div class="line">    nums.each&#123;<span class="params">|x|</span></div><div class="line">        <span class="keyword">next</span> <span class="keyword">if</span> x &lt; start_num <span class="params">||</span> x &gt; end_num</div><div class="line">        <span class="keyword">if</span> x &gt; middle_num     </div><div class="line">            greater += <span class="number">1</span></div><div class="line">        <span class="keyword">elsif</span> x &lt; middle_num    </div><div class="line">            less += <span class="number">1</span></div><div class="line">        <span class="keyword">else</span></div><div class="line">            eqls += <span class="number">1</span></div><div class="line">        <span class="keyword">end</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> middle_num <span class="keyword">if</span> eqls &gt; <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> -<span class="number">1</span> <span class="keyword">if</span> less &lt; <span class="number">2</span> &amp;&amp; greater &lt; <span class="number">2</span></div><div class="line">    m1 = start_num + (middle_num - start_num) / <span class="number">2</span></div><div class="line">    m2 = middle_num + (end_num - middle_num) / <span class="number">2</span></div><div class="line">    <span class="keyword">if</span> less &gt; middle_num - start_num</div><div class="line">        <span class="keyword">return</span> __find_duplicate(nums,start_num,m1,middle_num)</div><div class="line">    <span class="keyword">elsif</span> greater &gt; end_num - middle_num</div><div class="line">        <span class="keyword">return</span> __find_duplicate(nums,middle_num,m2,end_num)</div><div class="line">    <span class="keyword">else</span></div><div class="line">        a = __find_duplicate(nums,start_num,m1,middle_num)</div><div class="line">        <span class="keyword">return</span> a <span class="keyword">if</span> a != -<span class="number">1</span></div><div class="line">        b = __find_duplicate(nums,middle_num,m2,end_num)</div><div class="line">        <span class="keyword">return</span> b <span class="keyword">if</span> b != -<span class="number">1</span></div><div class="line">        <span class="keyword">return</span> -<span class="number">1</span></div><div class="line">    <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line"><span class="comment"># <span class="doctag">@param</span> &#123;Integer[]&#125; nums</span></div><div class="line"><span class="comment"># <span class="doctag">@return</span> &#123;Integer&#125;</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_duplicate</span><span class="params">(nums)</span></span></div><div class="line">    n = nums.length</div><div class="line">    m = <span class="number">1</span> + (n - <span class="number">1</span>) / <span class="number">2</span></div><div class="line">    __find_duplicate(nums,<span class="number">1</span>,m,n)</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>  
 	</div>
 		<footer class="article-footer clearfix">
@@ -127,6 +130,14 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2016/11/25/LeetCode-146-LRU-Cache/" title="LeetCode 146. LRU Cache">
+  <strong>上一篇：</strong><br/>
+  <span>
+  LeetCode 146. LRU Cache</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2016/11/25/使用warbler打包JRubyFX程序/"  title="使用warbler打包JRubyFX程序">
@@ -164,7 +175,7 @@
 		  
 		
 		  
-			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>1</sup></a></li>
+			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
 		  
 		
 		</ul>

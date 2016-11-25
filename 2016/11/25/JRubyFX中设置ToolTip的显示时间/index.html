@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="Koihik's Blog">
 <meta property="og:description" content="在JavaFX中使用ToolTip的话,会发现这个东西的显示延迟,显示时间都是写死的,没有开放API来设置这些时间.不过我们可以使用反射来强行修改这些设置,下面是JRubyFX的版本
 1234567891011121314151617behavior_field = javafx.scene.control.Tooltip.java_class.declared_field(&quot;BEHAVIOR&quot;)">
-<meta property="og:updated_time" content="2016-11-25T02:02:08.007Z">
+<meta property="og:updated_time" content="2016-11-25T02:52:50.327Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JRubyFX中设置ToolTip的显示时间">
 <meta name="twitter:description" content="在JavaFX中使用ToolTip的话,会发现这个东西的显示延迟,显示时间都是写死的,没有开放API来设置这些时间.不过我们可以使用反射来强行修改这些设置,下面是JRubyFX的版本
@@ -99,7 +99,7 @@
 		
 		<p>在JavaFX中使用ToolTip的话,会发现这个东西的显示延迟,显示时间都是写死的,没有开放API来设置这些时间.<br>不过我们可以使用反射来强行修改这些设置,下面是JRubyFX的版本</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">behavior_field = javafx.scene.control.Tooltip.java_class.declared_field(<span class="string">"BEHAVIOR"</span>)</div><div class="line">behavior_field.accessible = <span class="literal">true</span></div><div class="line">behavior = behavior_field.static_value</div><div class="line"></div><div class="line">timer_field = behavior.java_class.declared_field(<span class="string">"activationTimer"</span>)</div><div class="line">timer_field.accessible = <span class="literal">true</span></div><div class="line">timer = timer_field.value(behavior)</div><div class="line">timer.key_frames.clear</div><div class="line"><span class="comment"># 设置显示前的延迟为0ms</span></div><div class="line">timer.key_frames &lt;&lt; Java::JavafxAnimation::KeyFrame.new(<span class="number">0</span>.ms)</div><div class="line"></div><div class="line">timer_field = behavior.java_class.declared_field(<span class="string">"hideTimer"</span>)</div><div class="line">timer_field.accessible = <span class="literal">true</span></div><div class="line">timer = timer_field.value(behavior)</div><div class="line">timer.key_frames.clear</div><div class="line"><span class="comment"># 设置显示时间为10s</span></div><div class="line">timer.key_frames &lt;&lt; Java::JavafxAnimation::KeyFrame.new(<span class="number">10000</span>.ms)</div></pre></td></tr></table></figure>
-<p>可以看出在JRubyFX中ruby只是单纯的调用JavaFX,并没有重新实现一遍.所以JavaFX的API可以完全照搬过来,当然JRubyFX也为其创建了一些Ruby风格的别名,如<code>getKeyFrames</code> -&gt; <code>key_frames</code></p>
+<p>可以看出在JRubyFX中ruby只是单纯的调用JavaFX,并没有重新实现一遍.<br>所以JavaFX的API可以完全照搬过来,当然JRubyFX也为其创建了一些Ruby风格的别名.<br>如<code>getKeyFrames</code> -&gt; <code>key_frames</code></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -175,7 +175,7 @@
 		  
 		
 		  
-			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>1</sup></a></li>
+			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
 		  
 		
 		</ul>
