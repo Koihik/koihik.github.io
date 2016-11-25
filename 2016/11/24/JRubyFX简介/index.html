@@ -1,0 +1,425 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>JRubyFX简介 | Koihik&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Koihik">
+    
+
+    
+    <meta name="description" content="JRubyFX是什么先说说JavaFX是什么，JavaFX是Oracle官方出的一套GUI框架，相比Swing来说，算是稍微新一点，而且Swing已经不再更新了。并且JavaFX还支持FXML，一种XML格式的布局文件。Java这个冗余的语言用代码来写GUI的话，实在是蛋痛不已。FXML就很好的缓和了这一点，Android开发人员应该深有体会，布局文件比代码写界面是在是方便太多。接下来要说到JRu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JRubyFX简介">
+<meta property="og:url" content="http://koihik.github.io/2016/11/24/JRubyFX简介/index.html">
+<meta property="og:site_name" content="Koihik's Blog">
+<meta property="og:description" content="JRubyFX是什么先说说JavaFX是什么，JavaFX是Oracle官方出的一套GUI框架，相比Swing来说，算是稍微新一点，而且Swing已经不再更新了。并且JavaFX还支持FXML，一种XML格式的布局文件。Java这个冗余的语言用代码来写GUI的话，实在是蛋痛不已。FXML就很好的缓和了这一点，Android开发人员应该深有体会，布局文件比代码写界面是在是方便太多。接下来要说到JRu">
+<meta property="og:updated_time" content="2016-11-25T02:04:09.687Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JRubyFX简介">
+<meta name="twitter:description" content="JRubyFX是什么先说说JavaFX是什么，JavaFX是Oracle官方出的一套GUI框架，相比Swing来说，算是稍微新一点，而且Swing已经不再更新了。并且JavaFX还支持FXML，一种XML格式的布局文件。Java这个冗余的语言用代码来写GUI的话，实在是蛋痛不已。FXML就很好的缓和了这一点，Android开发人员应该深有体会，布局文件比代码写界面是在是方便太多。接下来要说到JRu">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Koihik&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/avatar.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/avatar.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Koihik&#39;s Blog">Koihik&#39;s Blog</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:koihik.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/11/24/JRubyFX简介/" title="JRubyFX简介" itemprop="url">JRubyFX简介</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Koihik" target="_blank" itemprop="author">Koihik</a>
+		
+  <p class="article-time">
+    <time datetime="2016-11-24T04:20:32.000Z" itemprop="datePublished"> 发表于 2016-11-24</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JRubyFX是什么"><span class="toc-number">1.</span> <span class="toc-text">JRubyFX是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么用JRubyFX"><span class="toc-number">2.</span> <span class="toc-text">为什么用JRubyFX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JRubyFX的安装-Windows平台"><span class="toc-number">3.</span> <span class="toc-text">JRubyFX的安装(Windows平台)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装JDK"><span class="toc-number">3.1.</span> <span class="toc-text">安装JDK</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装JRuby"><span class="toc-number">3.2.</span> <span class="toc-text">安装JRuby</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装JRubyFX"><span class="toc-number">3.3.</span> <span class="toc-text">安装JRubyFX</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JRubyFX的使用"><span class="toc-number">4.</span> <span class="toc-text">JRubyFX的使用</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="JRubyFX是什么"><a href="#JRubyFX是什么" class="headerlink" title="JRubyFX是什么"></a>JRubyFX是什么</h2><p>先说说JavaFX是什么，JavaFX是Oracle官方出的一套GUI框架，相比Swing来说，算是稍微新一点，而且Swing已经不再更新了。并且JavaFX还支持FXML，一种XML格式的布局文件。Java这个冗余的语言用代码来写GUI的话，实在是蛋痛不已。FXML就很好的缓和了这一点，Android开发人员应该深有体会，布局文件比代码写界面是在是方便太多。<br>接下来要说到JRubyFX，这个东西是JRuby团队给JavaFX写的一个Ruby封装，将JavaFX的API映射到Ruby。</p>
+<h2 id="为什么用JRubyFX"><a href="#为什么用JRubyFX" class="headerlink" title="为什么用JRubyFX"></a>为什么用JRubyFX</h2><p>我们的终极目的就是用Ruby这个炫酷的语言来写GUI。相比Ruby其他的GUI框架，如GTK等，JavaFX的文档算是相当齐全，并且社区也相对活跃。JRubyFX只是一个wrapper，我们最终调用的还是JavaFX的Java API。所以在使用JRubyFX的时候，遇到的95%的问题，都可以去JavaFX社区提问，寻找JavaFX的解决方案。</p>
+<h2 id="JRubyFX的安装-Windows平台"><a href="#JRubyFX的安装-Windows平台" class="headerlink" title="JRubyFX的安装(Windows平台)"></a>JRubyFX的安装(Windows平台)</h2><h3 id="安装JDK"><a href="#安装JDK" class="headerlink" title="安装JDK"></a>安装JDK</h3><p>推荐使用JDK1.8，安装过程略。<br>JDK1.8的目录下有一个javafx-src.zip，是JavaFX的源码。</p>
+<h3 id="安装JRuby"><a href="#安装JRuby" class="headerlink" title="安装JRuby"></a>安装JRuby</h3><p>下载并安装<a href="http://jruby.org/download" target="_blank" rel="external">JRuby</a>，这里有方便的Windows安装程序，过程略去。</p>
+<h3 id="安装JRubyFX"><a href="#安装JRubyFX" class="headerlink" title="安装JRubyFX"></a>安装JRubyFX</h3><p>在Windows下使用gem需要<a href="http://rubyinstaller.org/downloads/" target="_blank" rel="external">DevKit</a>，首先安装DevKit，并把安装后的bin目录加至系统Path变量中。<br>然后就可以安装JRubyFX了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jruby -S gem install jrubyfx</div></pre></td></tr></table></figure>
+<h2 id="JRubyFX的使用"><a href="#JRubyFX的使用" class="headerlink" title="JRubyFX的使用"></a>JRubyFX的使用</h2><p>安装完上述的依赖环境后，使用就非常简单了。编写一个叫demo.rb的文件</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">require</span> <span class="string">'jrubyfx'</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MainApp</span> &lt; JRubyFX::Application</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">start</span><span class="params">(stage)</span></span></div><div class="line">        with(stage, <span class="symbol">title:</span> <span class="string">"JRubyFX Demo"</span>)&#123;</div><div class="line">            layout_scene&#123;</div><div class="line">                label(<span class="string">"Hello World!"</span>)</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        stage.resizable = <span class="literal">false</span></div><div class="line">        stage.size_to_scene</div><div class="line">        stage.show</div><div class="line">    <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line">MainApp.launch</div></pre></td></tr></table></figure>
+<p>最后运行之</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jruby demo.rb</div></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/JRubyFX/">JRubyFX</a>
+</div>
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://koihik.github.io/2016/11/24/JRubyFX简介/" data-title="JRubyFX简介 | Koihik&#39;s Blog" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/11/25/JRubyFX中设置ToolTip的显示时间/" title="JRubyFX中设置ToolTip的显示时间">
+  <strong>上一篇：</strong><br/>
+  <span>
+  JRubyFX中设置ToolTip的显示时间</span>
+</a>
+</div>
+
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JRubyFX是什么"><span class="toc-number">1.</span> <span class="toc-text">JRubyFX是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么用JRubyFX"><span class="toc-number">2.</span> <span class="toc-text">为什么用JRubyFX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JRubyFX的安装-Windows平台"><span class="toc-number">3.</span> <span class="toc-text">JRubyFX的安装(Windows平台)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装JDK"><span class="toc-number">3.1.</span> <span class="toc-text">安装JDK</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装JRuby"><span class="toc-number">3.2.</span> <span class="toc-text">安装JRuby</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装JRubyFX"><span class="toc-number">3.3.</span> <span class="toc-text">安装JRubyFX</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JRubyFX的使用"><span class="toc-number">4.</span> <span class="toc-text">JRubyFX的使用</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/JRubyFX/" title="JRubyFX">JRubyFX<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://lqcode.com" target="_blank" title="李琼写代码的地方">李琼写代码的地方</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.jerkybible.com/" target="_blank" title="行走的轮子">行走的轮子</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="blog.soul11201.com" target="_blank" title="coder随想录">coder随想录</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="Koihik">Koihik</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

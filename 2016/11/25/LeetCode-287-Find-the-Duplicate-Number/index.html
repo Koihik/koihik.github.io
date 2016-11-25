@@ -1,0 +1,418 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>LeetCode 287. Find the Duplicate Number | Koihik&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Koihik">
+    
+
+    
+    <meta name="description" content="Find the Duplicate NumberGiven an array nums containing n + 1 integers where each integer is between 1 and n (inclusive), prove that at least one duplicate number must exist. Assume that there is only">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode 287. Find the Duplicate Number">
+<meta property="og:url" content="http://koihik.github.io/2016/11/25/LeetCode-287-Find-the-Duplicate-Number/index.html">
+<meta property="og:site_name" content="Koihik's Blog">
+<meta property="og:description" content="Find the Duplicate NumberGiven an array nums containing n + 1 integers where each integer is between 1 and n (inclusive), prove that at least one duplicate number must exist. Assume that there is only">
+<meta property="og:updated_time" content="2016-11-25T02:45:45.480Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LeetCode 287. Find the Duplicate Number">
+<meta name="twitter:description" content="Find the Duplicate NumberGiven an array nums containing n + 1 integers where each integer is between 1 and n (inclusive), prove that at least one duplicate number must exist. Assume that there is only">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Koihik&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/avatar.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/avatar.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Koihik&#39;s Blog">Koihik&#39;s Blog</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:koihik.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/11/25/LeetCode-287-Find-the-Duplicate-Number/" title="LeetCode 287. Find the Duplicate Number" itemprop="url">LeetCode 287. Find the Duplicate Number</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Koihik" target="_blank" itemprop="author">Koihik</a>
+		
+  <p class="article-time">
+    <time datetime="2016-11-25T02:20:26.000Z" itemprop="datePublished"> 发表于 2016-11-25</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Find-the-Duplicate-Number"><span class="toc-number">1.</span> <span class="toc-text">Find the Duplicate Number</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解"><span class="toc-number">2.</span> <span class="toc-text">解</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="Find-the-Duplicate-Number"><a href="#Find-the-Duplicate-Number" class="headerlink" title="Find the Duplicate Number"></a>Find the Duplicate Number</h2><p>Given an array nums containing n + 1 integers where each integer is between 1 and n (inclusive), prove that at least one duplicate number must exist. Assume that there is only one duplicate number, find the duplicate one.</p>
+<p>Note:<br>You must not modify the array (assume the array is read only).<br>You must use only constant, O(1) extra space.<br>Your runtime complexity should be less than O(n^2).<br>There is only one duplicate number in the array, but it could be repeated more than once.</p>
+<h2 id="解"><a href="#解" class="headerlink" title="解"></a>解</h2><p>找出重复数字的话,上来可能想到用Map,但是题中限定要常数的额外空间.并且不能改动原数组,所以排序也是不可行的.<br>一开始是想用分治的方法,将数组分为两部分(A,B),如果A中有重复的数,那么答案就在A中,如果在B中同理.如果A,B中都没有的话,那么说明有一个数在A,另一个在B.然而发现这种一个在A一个在B的情况无法处理,只能遍历,那么时间复杂度在最坏的情况下就是O(n^2)了.<br>后来注意到题中有个条件,一共(n+1)个整数,这些整数的范围都在(1-n)之间.那么就可以用二分法,取(1-n)的中位数n/2,遍历一次数组统计大于n/2和小于n/2的数的个数,如果大于n/2的数多于一半,说明重复的数是大于n/2的,反之同理.这样一次就可以排除一半的数,时间复杂度为O(nlogn).<br>代码如下:</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">__find_duplicate</span><span class="params">(nums,start_num,middle_num,end_num)</span></span></div><div class="line">    less = <span class="number">0</span></div><div class="line">    eqls = <span class="number">0</span></div><div class="line">    greater = <span class="number">0</span></div><div class="line">    nums.each&#123;<span class="params">|x|</span></div><div class="line">        <span class="keyword">next</span> <span class="keyword">if</span> x &lt; start_num <span class="params">||</span> x &gt; end_num</div><div class="line">        <span class="keyword">if</span> x &gt; middle_num     </div><div class="line">            greater += <span class="number">1</span></div><div class="line">        <span class="keyword">elsif</span> x &lt; middle_num    </div><div class="line">            less += <span class="number">1</span></div><div class="line">        <span class="keyword">else</span></div><div class="line">            eqls += <span class="number">1</span></div><div class="line">        <span class="keyword">end</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> middle_num <span class="keyword">if</span> eqls &gt; <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> -<span class="number">1</span> <span class="keyword">if</span> less &lt; <span class="number">2</span> &amp;&amp; greater &lt; <span class="number">2</span></div><div class="line">    m1 = start_num + (middle_num - start_num) / <span class="number">2</span></div><div class="line">    m2 = middle_num + (end_num - middle_num) / <span class="number">2</span></div><div class="line">    <span class="keyword">if</span> less &gt; middle_num - start_num</div><div class="line">        <span class="keyword">return</span> __find_duplicate(nums,start_num,m1,middle_num)</div><div class="line">    <span class="keyword">elsif</span> greater &gt; end_num - middle_num</div><div class="line">        <span class="keyword">return</span> __find_duplicate(nums,middle_num,m2,end_num)</div><div class="line">    <span class="keyword">else</span></div><div class="line">        a = __find_duplicate(nums,start_num,m1,middle_num)</div><div class="line">        <span class="keyword">return</span> a <span class="keyword">if</span> a != -<span class="number">1</span></div><div class="line">        b = __find_duplicate(nums,middle_num,m2,end_num)</div><div class="line">        <span class="keyword">return</span> b <span class="keyword">if</span> b != -<span class="number">1</span></div><div class="line">        <span class="keyword">return</span> -<span class="number">1</span></div><div class="line">    <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line"><span class="comment"># <span class="doctag">@param</span> &#123;Integer[]&#125; nums</span></div><div class="line"><span class="comment"># <span class="doctag">@return</span> &#123;Integer&#125;</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_duplicate</span><span class="params">(nums)</span></span></div><div class="line">    n = nums.length</div><div class="line">    m = <span class="number">1</span> + (n - <span class="number">1</span>) / <span class="number">2</span></div><div class="line">    __find_duplicate(nums,<span class="number">1</span>,m,n)</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://koihik.github.io/2016/11/25/LeetCode-287-Find-the-Duplicate-Number/" data-title="LeetCode 287. Find the Duplicate Number | Koihik&#39;s Blog" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/11/25/使用warbler打包JRubyFX程序/"  title="使用warbler打包JRubyFX程序">
+ <strong>下一篇：</strong><br/> 
+ <span>使用warbler打包JRubyFX程序
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Find-the-Duplicate-Number"><span class="toc-number">1.</span> <span class="toc-text">Find the Duplicate Number</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解"><span class="toc-number">2.</span> <span class="toc-text">解</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/JRubyFX/" title="JRubyFX">JRubyFX<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://lqcode.com" target="_blank" title="李琼写代码的地方">李琼写代码的地方</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.jerkybible.com/" target="_blank" title="行走的轮子">行走的轮子</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="blog.soul11201.com" target="_blank" title="coder随想录">coder随想录</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="Koihik">Koihik</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
