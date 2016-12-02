@@ -1,0 +1,445 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>LeetCode 391. Perfect Rectangle | Koihik&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Koihik">
+    
+
+    
+    <meta name="description" content="Given N axis-aligned rectangles where N &amp;gt; 0, determine if they all together form an exact cover of a rectangular region.
+Each rectangle is represented as a bottom-left point and a top-right point.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode 391. Perfect Rectangle">
+<meta property="og:url" content="http://koihik.github.io/2016/11/29/LeetCode-391-Perfect-Rectangle/index.html">
+<meta property="og:site_name" content="Koihik's Blog">
+<meta property="og:description" content="Given N axis-aligned rectangles where N &amp;gt; 0, determine if they all together form an exact cover of a rectangular region.
+Each rectangle is represented as a bottom-left point and a top-right point.">
+<meta property="og:image" content="https://leetcode.com/static/images/problemset/rectangle_perfect.gif">
+<meta property="og:image" content="https://leetcode.com/static/images/problemset/rectangle_separated.gif">
+<meta property="og:image" content="https://leetcode.com/static/images/problemset/rectangle_intersect.gif">
+<meta property="og:updated_time" content="2016-12-02T06:18:22.076Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LeetCode 391. Perfect Rectangle">
+<meta name="twitter:description" content="Given N axis-aligned rectangles where N &amp;gt; 0, determine if they all together form an exact cover of a rectangular region.
+Each rectangle is represented as a bottom-left point and a top-right point.">
+<meta name="twitter:image" content="https://leetcode.com/static/images/problemset/rectangle_perfect.gif">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Koihik&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/avatar.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/avatar.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Koihik&#39;s Blog">Koihik&#39;s Blog</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:koihik.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/11/29/LeetCode-391-Perfect-Rectangle/" title="LeetCode 391. Perfect Rectangle" itemprop="url">LeetCode 391. Perfect Rectangle</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Koihik" target="_blank" itemprop="author">Koihik</a>
+		
+  <p class="article-time">
+    <time datetime="2016-11-29T09:56:14.000Z" itemprop="datePublished"> 发表于 2016-11-29</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#解"><span class="toc-number">1.</span> <span class="toc-text">解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后记"><span class="toc-number">2.</span> <span class="toc-text">后记</span></a></li></ol>
+		
+		</div>
+		
+		<p>Given N axis-aligned rectangles where N &gt; 0, determine if they all together form an exact cover of a rectangular region.</p>
+<p>Each rectangle is represented as a bottom-left point and a top-right point. For example, a unit square is represented as [1,1,2,2]. (coordinate of bottom-left point is (1, 1) and top-right point is (2, 2)).</p>
+<ul>
+<li>Example 1:</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">rectangles = [</div><div class="line">  [<span class="number">1</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">3</span>],</div><div class="line">  [<span class="number">3</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">2</span>],</div><div class="line">  [<span class="number">3</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">4</span>],</div><div class="line">  [<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">4</span>],</div><div class="line">  [<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">]</div><div class="line"></div><div class="line">Return <span class="literal">true</span>. All <span class="number">5</span> rectangles together form an exact cover of a rectangular region.</div></pre></td></tr></table></figure>
+<p><img src="https://leetcode.com/static/images/problemset/rectangle_perfect.gif" alt=""></p>
+<ul>
+<li>Example 2:</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">rectangles = [</div><div class="line">  [<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],</div><div class="line">  [<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">4</span>],</div><div class="line">  [<span class="number">3</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">2</span>],</div><div class="line">  [<span class="number">3</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">4</span>]</div><div class="line">]</div><div class="line"></div><div class="line">Return <span class="literal">false</span>. Because there is a gap between the two rectangular regions.</div></pre></td></tr></table></figure>
+<p><img src="https://leetcode.com/static/images/problemset/rectangle_separated.gif" alt=""></p>
+<ul>
+<li>Example 3:</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">rectangles = [</div><div class="line">  [<span class="number">1</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">3</span>],</div><div class="line">  [<span class="number">3</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">2</span>],</div><div class="line">  [<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">4</span>],</div><div class="line">  [<span class="number">3</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">4</span>]</div><div class="line">]</div><div class="line"></div><div class="line">Return <span class="literal">false</span>. Because there is a gap <span class="keyword">in</span> the top center.</div><div class="line"><span class="string">``</span><span class="string">` </span></div><div class="line"></div><div class="line">![](https://leetcode.com/static/images/problemset/rectangle_hole.gif)</div><div class="line"></div><div class="line">* Example 4:</div><div class="line"></div><div class="line">`<span class="string">``</span>ruby</div><div class="line">rectangles = [</div><div class="line">  [<span class="number">1</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">3</span>],</div><div class="line">  [<span class="number">3</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">2</span>],</div><div class="line">  [<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">4</span>],</div><div class="line">  [<span class="number">2</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">4</span>]</div><div class="line">]</div><div class="line"></div><div class="line">Return <span class="literal">false</span>. Because two of the rectangles overlap with each other.</div></pre></td></tr></table></figure>
+<p><img src="https://leetcode.com/static/images/problemset/rectangle_intersect.gif" alt=""></p>
+<hr>
+<h2 id="解"><a href="#解" class="headerlink" title="解"></a>解</h2><p>以前LeetCode Contest中的一道题,判断一堆小矩形是否可以组成一个大矩形.<br>第一步感觉没有什么疑问,先判断小矩形加起来的面积和左下角与右上角组成的大矩形的面积是否一致.<br>这个面积不一致,那就可以直接返回false了.<br>然后需要判断小矩形之间没有重叠,这里如果就简单的遍历每两个矩形的话,时间复杂度是O(n^2),那妥妥的超时了.<br>当时做了不少优化的操作,比如合并小矩形什么的,不过归根结底还是个O(n^2)的算法,一直没有通过.</p>
+<p>现在回头再做的话,换了一种思路,直接先按左下角的x坐标和y坐标排序.<br>然后以X轴坐标为组开始遍历,如果从0至H(大矩形高度)有重叠或者接不上的情况,那么返回false.<br>遍历完一列之后,就可以往右推进X(最短的矩形宽度).然后再接着遍历下一列.<br>排序是O(nlogn),后面的遍历,逻辑比较复杂,做一些优化省去一些不必要的遍历的话,一眼看起来是个O(n)的操作.</p>
+<p>代码如下:</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># <span class="doctag">@param</span> &#123;Integer[][]&#125; rectangles</span></div><div class="line"><span class="comment"># <span class="doctag">@return</span> &#123;Boolean&#125;</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_rectangle_cover</span><span class="params">(rectangles)</span></span></div><div class="line">    <span class="comment"># 将坐标修改成以(0,0)为基准,方便后面计算</span></div><div class="line">    nx = <span class="literal">nil</span></div><div class="line">    ny = <span class="literal">nil</span></div><div class="line">    rectangles.each&#123;<span class="params">|r|</span></div><div class="line">        nx = r[<span class="number">0</span>] <span class="keyword">if</span> nx == <span class="literal">nil</span> <span class="params">||</span> r[<span class="number">0</span>] &lt; nx</div><div class="line">        ny = r[<span class="number">1</span>] <span class="keyword">if</span> ny == <span class="literal">nil</span> <span class="params">||</span> r[<span class="number">1</span>] &lt; ny</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> nx != <span class="number">0</span> <span class="params">||</span> ny != <span class="number">0</span></div><div class="line">        nx = -nx</div><div class="line">        ny = -ny</div><div class="line">        rectangles.each&#123;<span class="params">|r|</span></div><div class="line">            r[<span class="number">0</span>] += nx</div><div class="line">            r[<span class="number">1</span>] += ny</div><div class="line">            r[<span class="number">2</span>] += nx</div><div class="line">            r[<span class="number">3</span>] += ny</div><div class="line">        &#125;</div><div class="line">    <span class="keyword">end</span></div><div class="line">    </div><div class="line">    max_y = <span class="literal">nil</span></div><div class="line">    rectangles.each&#123;<span class="params">|r|</span></div><div class="line">        max_y = r[<span class="number">3</span>] <span class="keyword">if</span> max_y == <span class="literal">nil</span> <span class="params">||</span> r[<span class="number">3</span>] &gt; max_y</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment"># 按x-y排序</span></div><div class="line">    rectangles.sort!&#123;<span class="params">|a,b|</span></div><div class="line">        <span class="keyword">if</span> a[<span class="number">0</span>] &lt; b[<span class="number">0</span>]</div><div class="line">            -<span class="number">1</span></div><div class="line">        <span class="keyword">elsif</span> a[<span class="number">0</span>] &gt; b[<span class="number">0</span>]</div><div class="line">            <span class="number">1</span></div><div class="line">        <span class="keyword">else</span></div><div class="line">            a[<span class="number">1</span>] &lt;=&gt; b[<span class="number">1</span>]</div><div class="line">        <span class="keyword">end</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment"># 当前竖列</span></div><div class="line">    cache = []</div><div class="line">    </div><div class="line">    <span class="comment"># 当前高度</span></div><div class="line">    current_y = <span class="number">0</span></div><div class="line">    </div><div class="line">    <span class="comment"># 当前x偏移值</span></div><div class="line">    x_offset = <span class="number">0</span></div><div class="line">    </div><div class="line">    <span class="comment"># 应有高度</span></div><div class="line">    height = max_y</div><div class="line">    </div><div class="line">    <span class="comment"># 最小x值</span></div><div class="line">    min_x_offset = <span class="literal">nil</span></div><div class="line">    </div><div class="line">    <span class="comment"># 第二小x值</span></div><div class="line">    second_min_x_offset = <span class="literal">nil</span></div><div class="line">    </div><div class="line">    <span class="comment"># cache中高度&gt;=current_y的最小idx</span></div><div class="line">    cache_idx = <span class="number">0</span></div><div class="line">    </div><div class="line">    rectangles.each&#123;<span class="params">|r|</span></div><div class="line">        <span class="comment"># x需要往右移动</span></div><div class="line">        <span class="keyword">if</span> r[<span class="number">0</span>] != x_offset</div><div class="line">            <span class="comment"># 移动前把之前列的cache填充</span></div><div class="line">            <span class="comment"># next row</span></div><div class="line">            cache_idx.upto(cache.size-<span class="number">1</span>)&#123;<span class="params">|idx|</span></div><div class="line">                p = cache[idx]</div><div class="line">                <span class="keyword">break</span> <span class="keyword">if</span> p[<span class="number">0</span>] != current_y</div><div class="line">                current_y = p[<span class="number">1</span>]</div><div class="line">                cache_idx += <span class="number">1</span></div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            <span class="comment"># 上一列高度不够 fail</span></div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span> <span class="keyword">if</span> current_y != height</div><div class="line">            </div><div class="line">            <span class="comment"># x没有前进 fail</span></div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span> <span class="keyword">if</span> min_x_offset == x_offset</div><div class="line"></div><div class="line">            <span class="comment"># 更新x_offset</span></div><div class="line">            x_offset = min_x_offset</div><div class="line"></div><div class="line">            <span class="comment"># 移动x后 当前x值对应不上</span></div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span> <span class="keyword">if</span> r[<span class="number">0</span>] != x_offset</div><div class="line"></div><div class="line">            <span class="comment"># 重新开始计算新的一列</span></div><div class="line">            current_y = <span class="number">0</span></div><div class="line">            </div><div class="line">            <span class="comment"># 前面已填充的可以delete掉</span></div><div class="line">            ci = <span class="number">0</span></div><div class="line">            <span class="keyword">while</span> ci &lt; cache.size</div><div class="line">                p = cache[ci]</div><div class="line">                <span class="keyword">if</span> p[<span class="number">2</span>] &lt;= x_offset</div><div class="line">                    cache.delete_at(ci)</div><div class="line">                    ci -= <span class="number">1</span></div><div class="line">                <span class="keyword">end</span></div><div class="line">                <span class="comment"># 如果和上一个比较,x值一样且start_y与上一个的end_y一致,则把他们2个合并</span></div><div class="line">                <span class="keyword">if</span> ci &gt; <span class="number">0</span> &amp;&amp; p[<span class="number">2</span>] == cache[ci-<span class="number">1</span>][<span class="number">2</span>] &amp;&amp; p[<span class="number">0</span>] == cache[ci-<span class="number">1</span>][<span class="number">1</span>]</div><div class="line">                    cache[ci][<span class="number">0</span>] = cache[ci-<span class="number">1</span>][<span class="number">0</span>]</div><div class="line">                    cache.delete_at(ci-<span class="number">1</span>)</div><div class="line">                    ci -= <span class="number">1</span></div><div class="line">                <span class="keyword">end</span></div><div class="line">                ci += <span class="number">1</span></div><div class="line">            <span class="keyword">end</span></div><div class="line">            </div><div class="line">            cache_idx = <span class="number">0</span></div><div class="line"></div><div class="line">            <span class="comment"># 选出新的min_x_offset</span></div><div class="line">            <span class="keyword">if</span> second_min_x_offset != <span class="literal">nil</span></div><div class="line">                <span class="comment"># 有第二小的min_x_offset,用第二小的</span></div><div class="line">                min_x_offset = second_min_x_offset</div><div class="line">            <span class="keyword">else</span></div><div class="line">                <span class="comment"># 没有第二小的,重新遍历一遍来计算</span></div><div class="line">                <span class="comment"># 这里比较耗时,所以需要维持一个第二小的x_offset,如果每次都遍历计算,会超时</span></div><div class="line">                min_x_offset = <span class="literal">nil</span></div><div class="line">                cache.each&#123;<span class="params">|r|</span></div><div class="line">                    min_x_offset = r[<span class="number">2</span>] <span class="keyword">if</span> min_x_offset == <span class="literal">nil</span> <span class="params">||</span> min_x_offset &gt; r[<span class="number">2</span>]</div><div class="line">                &#125;</div><div class="line">            <span class="keyword">end</span></div><div class="line">            second_min_x_offset = <span class="literal">nil</span></div><div class="line">            </div><div class="line">        <span class="keyword">end</span></div><div class="line">        </div><div class="line">        <span class="comment"># 先填充cache里的</span></div><div class="line">        cache_idx.upto(cache.size-<span class="number">1</span>)&#123;<span class="params">|idx|</span></div><div class="line">            p = cache[idx]</div><div class="line">            </div><div class="line">            <span class="keyword">break</span> <span class="keyword">if</span> p[<span class="number">0</span>] != current_y</div><div class="line">            current_y = p[<span class="number">1</span>]</div><div class="line">            cache_idx += <span class="number">1</span></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment"># y值接不上 fail</span></div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span> <span class="keyword">if</span> r[<span class="number">1</span>] != current_y</div><div class="line"></div><div class="line">        <span class="comment"># 放入cache</span></div><div class="line">        cache.insert cache_idx,[r[<span class="number">1</span>],r[<span class="number">3</span>],r[<span class="number">2</span>]]</div><div class="line"></div><div class="line">        <span class="comment"># 更新当前高度</span></div><div class="line">        current_y = r[<span class="number">3</span>]</div><div class="line"></div><div class="line">        <span class="comment"># 计算min_x_offset</span></div><div class="line">        <span class="keyword">if</span> min_x_offset == <span class="literal">nil</span> <span class="params">||</span> min_x_offset &gt; r[<span class="number">2</span>]</div><div class="line">            second_min_x_offset = min_x_offset</div><div class="line">            min_x_offset = r[<span class="number">2</span>]</div><div class="line">        <span class="keyword">end</span></div><div class="line"></div><div class="line">        <span class="comment"># 与cache中下一个块重叠了</span></div><div class="line">        <span class="keyword">if</span> cache_idx + <span class="number">1</span> &lt; cache.size</div><div class="line">            <span class="comment"># r[3]是当前块的最大Y值,如果比cache中下一块的最小Y值大,说明有重叠,fail</span></div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span> <span class="keyword">if</span> r[<span class="number">3</span>] &gt; cache[cache_idx+<span class="number">1</span>][<span class="number">0</span>]</div><div class="line">        <span class="keyword">end</span></div><div class="line">        </div><div class="line">        cache_idx += <span class="number">1</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>虽然通过了,不过这堆代码太长太复杂了,照理说应该不用这么麻烦.<br>于是后来我进讨论区看看大佬们是怎么写的.果然是有简便多的算法的.<br>第一步确实是先判断面积.第二步判断重叠时,只需遍历一次所有的小矩形.<br>考虑他们的顶点,如果没有重叠的话,那么除了四个角上的顶点,其他位置的顶点都应该有偶数个.<br>这个算法就简单多了,O(n)的时间,O(n)的空间.<br>不过上面O(nlogn)的算法只需300ms,而这个明显是O(n)的算法居然要400ms.也是不知道为什么这么迷.</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># <span class="doctag">@param</span> &#123;Integer[][]&#125; rectangles</span></div><div class="line"><span class="comment"># <span class="doctag">@return</span> &#123;Boolean&#125;</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_rectangle_cover</span><span class="params">(rectangles)</span></span></div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span> <span class="keyword">if</span> rectangles.size == <span class="number">0</span></div><div class="line">    map = &#123;&#125;</div><div class="line"></div><div class="line">    min_x = <span class="literal">nil</span></div><div class="line">    min_y = <span class="literal">nil</span></div><div class="line">    max_x = <span class="literal">nil</span></div><div class="line">    max_y = <span class="literal">nil</span></div><div class="line">    total_area = <span class="number">0</span></div><div class="line">    rectangles.each&#123;<span class="params">|r|</span></div><div class="line">        min_x = r[<span class="number">0</span>] <span class="keyword">if</span> min_x == <span class="literal">nil</span> <span class="params">||</span> r[<span class="number">0</span>] &lt; min_x</div><div class="line">        min_y = r[<span class="number">1</span>] <span class="keyword">if</span> min_y == <span class="literal">nil</span> <span class="params">||</span> r[<span class="number">1</span>] &lt; min_y</div><div class="line">        max_x = r[<span class="number">2</span>] <span class="keyword">if</span> max_x == <span class="literal">nil</span> <span class="params">||</span> r[<span class="number">2</span>] &gt; max_x</div><div class="line">        max_y = r[<span class="number">3</span>] <span class="keyword">if</span> max_y == <span class="literal">nil</span> <span class="params">||</span> r[<span class="number">3</span>] &gt; max_y</div><div class="line">        </div><div class="line">        total_area += ((r[<span class="number">2</span>] - r[<span class="number">0</span>]) * (r[<span class="number">3</span>] - r[<span class="number">1</span>]))</div><div class="line">        </div><div class="line">        [[r[<span class="number">0</span>],r[<span class="number">1</span>]],[r[<span class="number">0</span>],r[<span class="number">3</span>]],[r[<span class="number">2</span>],r[<span class="number">1</span>]],[r[<span class="number">2</span>],r[<span class="number">3</span>]]].each&#123;<span class="params">|x|</span></div><div class="line">            k = <span class="string">"<span class="subst">#&#123;x[<span class="number">0</span>]&#125;</span>,<span class="subst">#&#123;x[<span class="number">1</span>]&#125;</span>"</span></div><div class="line">            <span class="keyword">if</span> map[k]</div><div class="line">                map.delete(k)</div><div class="line">            <span class="keyword">else</span></div><div class="line">                map[k] = <span class="literal">true</span></div><div class="line">            <span class="keyword">end</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    rect_area = ((max_x - min_x) * (max_y - min_y))</div><div class="line">    </div><div class="line">    [[min_x,min_y],[min_x,max_y],[max_x,min_y],[max_x,max_y]].each&#123;<span class="params">|x|</span></div><div class="line">        k = <span class="string">"<span class="subst">#&#123;x[<span class="number">0</span>]&#125;</span>,<span class="subst">#&#123;x[<span class="number">1</span>]&#125;</span>"</span></div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span> <span class="keyword">unless</span> map[k]</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> map.keys.size == <span class="number">4</span> &amp;&amp; total_area == rect_area</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://koihik.github.io/2016/11/29/LeetCode-391-Perfect-Rectangle/" data-title="LeetCode 391. Perfect Rectangle | Koihik&#39;s Blog" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/11/25/LeetCode-146-LRU-Cache/"  title="LeetCode 146. LRU Cache">
+ <strong>下一篇：</strong><br/> 
+ <span>LeetCode 146. LRU Cache
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#解"><span class="toc-number">1.</span> <span class="toc-text">解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后记"><span class="toc-number">2.</span> <span class="toc-text">后记</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/JRubyFX/" title="JRubyFX">JRubyFX<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://lqcode.com" target="_blank" title="李琼写代码的地方">李琼写代码的地方</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.jerkybible.com/" target="_blank" title="行走的轮子">行走的轮子</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.soul11201.com" target="_blank" title="coder随想录">coder随想录</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="Koihik">Koihik</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
